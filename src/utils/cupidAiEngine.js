@@ -129,13 +129,14 @@ export function calculateCompatibility(userProfile = {}, candidate = {}) {
 export function generateAiMatchInsight(userProfile = {}, candidate = {}, metrics = {}) {
   const shared = metrics.sharedInterests || [];
   const matchedKeywords = metrics.matchedKeywords || [];
+  const userName = String(userProfile.name || '').trim();
   const goalObj = RELATIONSHIP_GOALS.find((g) => g.id === candidate.goal);
   const goalText = goalObj ? goalObj.label.toLowerCase() : 'una conexion genuina';
 
   let reason = '';
   if (shared.length >= 2) {
     const topShared = shared.slice(0, 3).join(', ');
-    reason = `CUPID AI detecto una alta resonancia entre sus perfiles porque ambos disfrutan de ${topShared}.`;
+    reason = `CUPID AI detecto una alta resonancia entre ${userName || 'tu perfil'} y ${candidate.name || 'este candidato'} porque ambos disfrutan de ${topShared}.`;
   } else if (shared.length === 1) {
     reason = `CUPID AI encontro un punto de conexion clave en su gusto compartido por ${shared[0]}.`;
   } else {
